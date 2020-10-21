@@ -14,6 +14,7 @@ import moment from 'moment'
   export default {
     data() {
       return {
+        city: null,
         temperature: null,
         date: moment().locale("fr").format("Do MMMM YYYY, HH:mm"),       
       }
