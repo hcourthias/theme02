@@ -4,16 +4,16 @@ import axios from 'axios'
 
 
 export class API {
-  static get(url, callback) {
+  static get(url, callback, errorHandling) {
     axios({
       method: "get",
       url: url,
     }).then(response => {
       callback(response);
     }).catch(error => {
-      console.log(error)});
+      errorHandling(error)});
   }
-  static post(url, data, callback) {
+  static post(url, data, callback, errorHandling) {
     axios({
       method: "post",
       url: url,
@@ -21,10 +21,10 @@ export class API {
     }).then(response => {
       callback(response);
     }).catch(error => {
-      console.log(error)});
+      errorHandling(error)});
   }
 
-  static put(url, data, callback) {
+  static put(url, data, callback, errorHandling) {
     axios({
       method: "put",
       url: url,
@@ -32,7 +32,7 @@ export class API {
     }).then(response => {
       callback(response);
     }).catch(error => {
-      console.log(error)});
+      errorHandling(error)});
   }
   static delete(url, callback, errorHandling) {
     axios({

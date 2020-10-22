@@ -28,7 +28,7 @@
         },
         methods: {
           createUser() {
-            API.createUser(this.email,this.name).then(response => console.log(response)).catch(error=> alert(error  ))
+            API.createUser(this.email,this.name).then(response => console.log(response)).catch(() => alert("failed to create user"))
           },
           updateUser(){
             // API.updateUser(id,name)
