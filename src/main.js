@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import CurrentWeather from '@/components/CurrentWeather'
-
 import App from '@/App'
+import axios from 'axios'
 
-Vue.use(Router)
+Vue.prototype.$http = axios
 Vue.config.productionTip = false
+Vue.use(Router)
 
 const router = new Router({
   routes: [
