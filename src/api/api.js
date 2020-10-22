@@ -1,19 +1,18 @@
 import axios from 'axios'
 
- const BASE_URL = "http://localhost:4000/api"
-
+const BASE_URL = "http://localhost:4000/api"
 
 export class API {
-  static get(url, callback) {
+  static get(url, callback, errorHandling) {
     axios({
       method: "get",
       url: url,
     }).then(response => {
       callback(response);
     }).catch(error => {
-      console.log(error)});
+      errorHandling(error)});
   }
-  static post(url, data, callback) {
+  static post(url, data, callback, errorHandling) {
     axios({
       method: "post",
       url: url,
@@ -21,10 +20,10 @@ export class API {
     }).then(response => {
       callback(response);
     }).catch(error => {
-      console.log(error)});
+      errorHandling(error)});
   }
 
-  static put(url, data, callback) {
+  static put(url, data, callback, errorHandling) {
     axios({
       method: "put",
       url: url,
@@ -32,46 +31,76 @@ export class API {
     }).then(response => {
       callback(response);
     }).catch(error => {
-      console.log(error)});
+      errorHandling(error)});
   }
-  static delete(url, callback) {
+  static delete(url, callback, errorHandling) {
     axios({
       method: "delete",
       url: url,
     }).then(response => {
       callback(response);
     }).catch(error => {
-      console.log(error)});
+      errorHandling(error)});
   }
+}
 
-  static createUser(email, username) {
-    this.post(`${BASE_URL}/users`, {user: {email, username}}, response => {
-      console.log(response)
+export const createUser = (email, username) => {
+  return new Promise((resolve, reject) => {
+    API.post(`${BASE_URL}/users`, {user: {email, username}}, response => {
+      resolve(response)
+    }, error => {
+      reject(error)
     });
-  }
+  })
+}
 
-  static getUser(id) {
-    this.get(`${BASE_URL}/users/${id}`, response => {
-      console.log(response)
+export const getUser = (id) => {
+  return new Promise((resolve, reject) => {
+    API.get(`${BASE_URL}/users/${id}`, response => {
+      resolve(response)
+    }, error => {
+      reject(error)
     });
-  }
+  });
+}
 
 
-  static getUserByEmailAndUsername(email, username) {
-    this.get(`${BASE_URL}/users?email=${email}&username=${username}`, response => {
-      console.log(response)
+export const getUserByEmailAndUsername = (email, username) => {
+  return new Promise((resolve, reject) => {
+    API.get(`${BASE_URL}/users?email=${email}&username=${username}`, response => {
+      resolve(response)
+    }, error => {
+      reject(error)
     });
-  }
+  });
+}
 
-  static updateUser(id, user) {
-    this.put(`${BASE_URL}/users/${id}`, {user}, response => {
-      console.log(response)
+export const updateUser = (id, user) => {
+  return new Promise((resolve, reject) => {
+    API.put(`${BASE_URL}/users/${id}`, {user}, response => {
+      resolve(response)
+    }, error => {
+      reject(error)
     });
-  }
+  });
+}
 
-  static deleteUser(id) {
-    this.delete(`${BASE_URL}/users/${id}`, response => {
-      console.log(response)
+export const  deleteUser = (id) => {
+  return new Promise((resolve, reject) => {
+    API.delete(`${BASE_URL}/users/${id}`, response => {
+      resolve(response)
+    }, error => {
+      reject(error)
     });
-  }
+  });
+}
+
+export const  getWorkingTimeByUserID = (userID, workingTimeID) => {
+  return new Promise((resolve, reject) => {
+    API.get(`${BASE_URL}/workingtimes/${userID}/${workingTimeID}`, response => {
+      resolve(response)
+    }, error => {
+      reject(error)
+    });
+  });
 }
