@@ -1,7 +1,6 @@
 import axios from 'axios'
 
- const BASE_URL = "http://localhost:4000/api"
-
+const BASE_URL = "http://localhost:4000/api"
 
 export class API {
   static get(url, callback, errorHandling) {
@@ -43,55 +42,65 @@ export class API {
     }).catch(error => {
       errorHandling(error)});
   }
+}
 
-  static createUser(email, username) {
-    return new Promise((resolve, reject) => {
-      this.post(`${BASE_URL}/users`, {user: {email, username}}, response => {
-        resolve(response)
-      }, error => {
-        reject(error)
-      });
-    })
-  }
-
-  static getUser(id) {
-    return new Promise((resolve, reject) => {
-      this.get(`${BASE_URL}/users/${id}`, response => {
-        resolve(response)
-      }, error => {
-        reject(error)
-      });
+export const createUser = (email, username) => {
+  return new Promise((resolve, reject) => {
+    API.post(`${BASE_URL}/users`, {user: {email, username}}, response => {
+      resolve(response)
+    }, error => {
+      reject(error)
     });
-  }
+  })
+}
 
-
-  static getUserByEmailAndUsername(email, username) {
-    return new Promise((resolve, reject) => {
-      this.get(`${BASE_URL}/users?email=${email}&username=${username}`, response => {
-        resolve(response)
-      }, error => {
-        reject(error)
-      });
+export const getUser = (id) => {
+  return new Promise((resolve, reject) => {
+    API.get(`${BASE_URL}/users/${id}`, response => {
+      resolve(response)
+    }, error => {
+      reject(error)
     });
-  }
+  });
+}
 
-  static updateUser(id, user) {
-    return new Promise((resolve, reject) => {
-      this.put(`${BASE_URL}/users/${id}`, {user}, response => {
-        resolve(response)
-      }, error => {
-        reject(error)
-      });
-    });
-  }
 
-  static deleteUser(id) {
-    return new Promise((resolve, reject) => {
-      this.delete(`${BASE_URL}/users/${id}`, response => {
-        resolve(response)
-      }, error => {
-        reject(error)
-      });
+export const getUserByEmailAndUsername = (email, username) => {
+  return new Promise((resolve, reject) => {
+    API.get(`${BASE_URL}/users?email=${email}&username=${username}`, response => {
+      resolve(response)
+    }, error => {
+      reject(error)
     });
-  }
+  });
+}
+
+export const updateUser = (id, user) => {
+  return new Promise((resolve, reject) => {
+    API.put(`${BASE_URL}/users/${id}`, {user}, response => {
+      resolve(response)
+    }, error => {
+      reject(error)
+    });
+  });
+}
+
+export const  deleteUser = (id) => {
+  return new Promise((resolve, reject) => {
+    API.delete(`${BASE_URL}/users/${id}`, response => {
+      resolve(response)
+    }, error => {
+      reject(error)
+    });
+  });
+}
+
+export const  getWorkingTimeByUserID = (userID, workingTimeID) => {
+  return new Promise((resolve, reject) => {
+    API.get(`${BASE_URL}/workingtimes/${userID}/${workingTimeID}`, response => {
+      resolve(response)
+    }, error => {
+      reject(error)
+    });
+  });
 }
