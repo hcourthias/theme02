@@ -34,44 +34,64 @@ export class API {
     }).catch(error => {
       console.log(error)});
   }
-  static delete(url, callback) {
+  static delete(url, callback, errorHandling) {
     axios({
       method: "delete",
       url: url,
     }).then(response => {
       callback(response);
     }).catch(error => {
-      console.log(error)});
+      errorHandling(error)});
   }
 
   static createUser(email, username) {
-    this.post(`${BASE_URL}/users`, {user: {email, username}}, response => {
-      console.log(response)
-    });
+    return new Promise((resolve, reject) => {
+      this.post(`${BASE_URL}/users`, {user: {email, username}}, response => {
+        resolve(response)
+      }, error => {
+        reject(error)
+      });
+    })
   }
 
   static getUser(id) {
-    this.get(`${BASE_URL}/users/${id}`, response => {
-      console.log(response)
+    return new Promise((resolve, reject) => {
+      this.get(`${BASE_URL}/users/${id}`, response => {
+        resolve(response)
+      }, error => {
+        reject(error)
+      });
     });
   }
 
 
   static getUserByEmailAndUsername(email, username) {
-    this.get(`${BASE_URL}/users?email=${email}&username=${username}`, response => {
-      console.log(response)
+    return new Promise((resolve, reject) => {
+      this.get(`${BASE_URL}/users?email=${email}&username=${username}`, response => {
+        resolve(response)
+      }, error => {
+        reject(error)
+      });
     });
   }
 
   static updateUser(id, user) {
-    this.put(`${BASE_URL}/users/${id}`, {user}, response => {
-      console.log(response)
+    return new Promise((resolve, reject) => {
+      this.put(`${BASE_URL}/users/${id}`, {user}, response => {
+        resolve(response)
+      }, error => {
+        reject(error)
+      });
     });
   }
 
   static deleteUser(id) {
-    this.delete(`${BASE_URL}/users/${id}`, response => {
-      console.log(response)
+    return new Promise((resolve, reject) => {
+      this.delete(`${BASE_URL}/users/${id}`, response => {
+        resolve(response)
+      }, error => {
+        reject(error)
+      });
     });
   }
 }
